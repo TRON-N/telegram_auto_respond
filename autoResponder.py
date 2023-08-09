@@ -20,8 +20,9 @@ async def main():
         bot_token=bot_token
     )
     
-    church_group_id = os.getenv('GROUP_CHAT_ID')
-    notification_group_id = os.getenv('NOTIFICATION_GROUP_ID')
+    church_group_id = int(os.getenv('GROUP_CHAT_ID'))
+    notification_group_id = int(os.getenv('NOTIFICATION_GROUP_ID'))
+
 
     async def my_handler(client, message: Message):
         print(f"Message text: '{message.text}'")
