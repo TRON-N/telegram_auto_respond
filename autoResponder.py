@@ -15,12 +15,15 @@ async def main():
 
     bot_token = os.getenv("TELEGRAM_BOT_API_TOKEN")
 
-    church_group_id = os.getenv("GROUP_CHAT_ID")
-    notification_group_id = os.getenv("NOTIFICATION_GROUP_ID")
-
     notifier_bot = NotifierBot(api_id, api_hash, bot_token)
+    
+    church_group_id = int(os.getenv('GROUP_CHAT_ID'))
+    notification_group_id = int(os.getenv('NOTIFICATION_GROUP_ID'))
+
 
     async def my_handler(client, message: Message):
+        print(f"Message text: '{message.text}'")
+        print(f"Chat ID: '{message.chat.id}' Chat Title: '{message.chat.title}'")
         if isinstance(message.text, str) and message.chat.id == church_group_id:
             if message.text.lower().find("online") != -1:
                 await notifier_bot.bot_app.send_message(
@@ -28,6 +31,7 @@ async def main():
                     text=f"Quick, {message.from_user.username} might need an online group for someone.",
                 )
                 # await message.forward('me')
+                print(f'Sent Message to chat: {notification_group_id}')
 
     MessageHandler(my_handler)
     user_app.add_handler(MessageHandler(my_handler))
