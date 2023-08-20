@@ -1,5 +1,6 @@
 import asyncio
 import os
+import re
 from pyrogram import Client, compose
 from pyrogram.types import Message
 from pyrogram.handlers import MessageHandler
@@ -37,7 +38,7 @@ async def main():
         print(f"Message text: '{message.text}'")
         print(f"Chat ID: '{message.chat.id}' Chat Title: '{message.chat.title}'")
         if isinstance(message.text, str):  # and message.chat.id == church_group_id
-            message_word_list = message.text.split()
+            message_word_list = re.split('[^a-zA-Z0-9]', message.text)
             keyword_chat_dict = keyword_chat_matrix.find_chats_for_keywords(
                 message_word_list
             )

@@ -23,9 +23,10 @@ class DataBackup:
     def _backup_runner(self):
         while True:
             last_updated = self._keyword_chat_matrix.last_updated
+            last_dump = self._keyword_chat_matrix.last_dump
             time_delta = timedelta(minutes=self._backup_time_wait_in_minutes)
             # We want to leave some room, so that we don't try to dump while changes are being made to the data
-            if datetime.now() - last_updated > time_delta:
+            if datetime.now() - last_updated > time_delta and last_dump < last_updated:
                 print(f"{datetime.now()}: Backing up data")
                 self._keyword_chat_matrix.dump_to_file(self._backup_file_name)
                 print(f"{datetime.now()}: Backup finished")
