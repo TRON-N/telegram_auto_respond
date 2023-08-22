@@ -28,10 +28,12 @@ class KeywordChatMatrix:
             self._keyword_chat_id_dict[normalized_keyword].add(chat_id)
         self.last_updated = datetime.now()
 
-    def try_remove_keyword(self, keyword: list[str], chat_id: int) -> bool:
+    def try_remove_keyword(self, keyword: str, chat_id: int) -> bool:
         if self._does_dict_key_chat_id_exist(chat_id):
             try:
-                self._chat_id_keyword_dict[chat_id].remove(keyword.lower())
+                normalized_keyword = keyword.lower()
+                self._chat_id_keyword_dict[chat_id].remove(normalized_keyword)
+                self._keyword_chat_id_dict[normalized_keyword].remove(chat_id)
                 self.last_updated = datetime.now()
                 return True
             except:
