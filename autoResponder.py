@@ -1,7 +1,7 @@
 import asyncio
 import os
 import re
-from pyrogram import Client, compose
+from pyrogram import Client, compose, filters
 from pyrogram.types import Message
 from pyrogram.handlers import MessageHandler
 from DataBackup import DataBackup
@@ -25,7 +25,7 @@ async def main():
         keyword_chat_matrix,
         backup_file_name,
         sleep_duration_in_seconds=120,
-        backup_time_wait_in_minutes=1,
+        backup_time_wait_in_minutes=5,
     )
 
     data_backup_service.start_runner()
@@ -37,7 +37,7 @@ async def main():
     async def my_handler(client, message: Message):
         print(f"Message text: '{message.text}'")
         print(f"Chat ID: '{message.chat.id}' Chat Title: '{message.chat.title}'")
-        if isinstance(message.text, str):  # and message.chat.id == church_group_id
+        if isinstance(message.text, str):
             message_word_list = re.split('[^a-zA-Z0-9]', message.text)
             keyword_chat_dict = keyword_chat_matrix.find_chats_for_keywords(
                 message_word_list
@@ -55,7 +55,7 @@ async def main():
                         forward_dest_list.append(chat_id)
 
     MessageHandler(my_handler)
-    user_app.add_handler(MessageHandler(my_handler))
+    user_app.add_handler(MessageHandler(my_handler, filters=filters.chat(church_group_id)))
 
     apps = [user_app, notifier_bot.bot_app]
 
