@@ -50,7 +50,8 @@ async def main():
                         print(f"Forwarding message {message.id} to chat {chat_id}")
                         await notifier_bot.bot_app.send_message(
                             chat_id=chat_id,
-                            text=f"New message in {message.chat.title} matched the set keywords.\n\nMessage text:\n\n{message.text}",
+                            text=f"New message in the '{message.chat.title}' group matched a keyword.\n\nMessage text:\n\n{message.text}"
+                            f"\n\nUse this link to go to the original message in the '{message.chat.title}' group:\n{message.link}",
                         )
                         forward_dest_list.append(chat_id)
 
