@@ -63,6 +63,7 @@ async def main():
         print("FROM_USER:", message.from_user)
         print("SENDER_CHAT:", message.sender_chat)
         print("TEXT:", message.text)
+        print("MESSAGE:", message)
 
     user_app.add_handler(MessageHandler(my_handler, filters=filters.chat(church_group_id)))
     user_app.add_handler(MessageHandler(debug_handler))
