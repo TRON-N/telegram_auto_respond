@@ -11,6 +11,7 @@ from NotifierBot import NotifierBot
 
 
 async def main():
+    print("Starting app")
     api_id = os.getenv("TELEGRAM_API_ID")
     api_hash = os.getenv("TELEGRAM_API_HASH")
 
@@ -33,6 +34,8 @@ async def main():
     notifier_bot = NotifierBot(api_id, api_hash, bot_token, keyword_chat_matrix)
 
     church_group_id = int(os.getenv("GROUP_CHAT_ID"))
+
+    print(f"api_id: {api_id}, api_hash: {api_hash}, bot_token: {bot_token}, group_chat_id: {church_group_id}")
 
     async def my_handler(client, message: Message):
         print(f"Message text: '{message.text}'")
