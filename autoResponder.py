@@ -58,8 +58,14 @@ async def main():
                         )
                         forward_dest_list.append(chat_id)
 
-    MessageHandler(my_handler)
+    async def debug_handler(client, message: Message):
+        print("TYPE:", message.chat.type)
+        print("FROM_USER:", message.from_user)
+        print("SENDER_CHAT:", message.sender_chat)
+        print("TEXT:", message.text)
+
     user_app.add_handler(MessageHandler(my_handler, filters=filters.chat(church_group_id)))
+    user_app.add_handler(MessageHandler(debug_handler))
 
     apps = [user_app, notifier_bot.bot_app]
 
