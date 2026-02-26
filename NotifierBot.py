@@ -133,7 +133,8 @@ class NotifierBot:
         tokens = shlex.split(text)
         if not tokens:
             return
-        cmd = tokens[0].lstrip("/").lower()
+        cmd_token = tokens[0].lstrip("/").lower()
+        cmd = cmd_token.split("@", 1)[0]
         args = tokens[1:] if len(tokens) > 1 else []
         if cmd not in self.command_dictionary:
             return

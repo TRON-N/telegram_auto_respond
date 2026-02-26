@@ -29,7 +29,7 @@ data_backup_service = DataBackup(
     backup_time_wait_in_minutes=5,
 )
 
-# data_backup_service.start_runner()
+data_backup_service.start_runner()
 
 notifier_bot = NotifierBot(api_id, api_hash, bot_token, keyword_chat_matrix)
 
